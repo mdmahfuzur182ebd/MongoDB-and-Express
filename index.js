@@ -1,31 +1,20 @@
 //Express 
 const { request, response, json } = require('express');
 const express = require('express');
+const fs = require('fs');
 const app = express();
 
-// console.log(app);
-// app.get();
-// app.post()
-// app.put()
-// app.patch()
-// app.delete()
-// app.on()
-// app.emit()
 
-app.get('/', (request, response) => {
-    response.send("Hello from express js..")
-});
-
-app.get('/some', (request, response) => {
-    response.send("Another Link.....")
-});
-
-app.get("/student", (request, response) => {
-    response.send('<h1>Hello Something</h1>');
+app.get('/', (request, response)=>{
+    response.send(JSON.stringify(["Karim", "Rahmna"]));
 })
 
-app.get('/auto', (request, response)=>{
-    response.send(JSON.stringify(["Karim", "Rahmna"]));
+app.get('/api/students', (req, res) => {
+    fs.readFile('./db.json', 'utf-8', (err, data) => {
+        console.log(data);
+        const student = JSON.parse(data).student
+        res.send(student);
+    } )
 })
 
 const port = 3000;
