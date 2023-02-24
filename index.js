@@ -5,18 +5,15 @@
   app.use(express.json());
 
 
-  app.get('/', (request, respond) => {
-    respond.send("Hello Express js.....")
-  });
 
-  app.get('/api/students', (req, res) => {
+  const studentList = (req, res) => {
      db.getDbStudent()
      .then(students => {
        res.send(students);
      });
-  });
+  }
 
-  app.post('/api/students', (req, res) => {
+  const newStudent =  (req, res) => {
       const student = req.body;
         db.getDbStudent()
         .then(students => {
@@ -26,11 +23,10 @@
             .then(data =>{
                res.send(student);
             });
-        });
-  });
+       });
+  }
 
-  //route parameter..
-  app.get('/api/students/:id', (req,res)=> {
+  const studentDetail = (req,res)=> {
      const id = parseInt(req.params.id);
      db.getDbStudent()
      .then(students => {
@@ -38,9 +34,10 @@
         if(!student) res.status(404).send("No student found with this id");
         else res.send(student);
      });
-  });
+  }
 
-  app.put('/api/students/:id', (req, res) => {
+
+  const studentUpdate = (req, res) => {
      const id = parseInt(req.params.id);
      const updatedData = req.body;
       db.getDbStudent()
@@ -54,9 +51,9 @@
             .then(msg => res.send(updatedData))
           }
       });
-  });
+  }
 
-  app.delete('/api/students/:id', (req, res) => {
+  const studentDelete = (req, res) => {
         const id = parseInt(req.params.id);
         db.getDbStudent()
         .then(students => {
@@ -69,7 +66,23 @@
                .then(msg => res.send(student));
             }
         });
+  }
+
+
+
+  app.get('/', (request, respond) => {
+    respond.send("Hello Express js.....")
   });
+
+  app.get('/api/students', studentList);
+
+  app.post('/api/students', newStudent);
+
+  app.get('/api/students/:id',studentDetail );
+
+  app.put('/api/students/:id', studentUpdate);
+
+  app.delete('/api/students/:id', studentDelete);
 
 
 
