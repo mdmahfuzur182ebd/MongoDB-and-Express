@@ -1,5 +1,9 @@
+const express = require('express');
+const router = express.Router();
+const db = require('../db');
+
 const fs = require('fs');
-const db = require('./db');
+
 
   const studentList = (req, res) => {
      db.getDbStudent()
@@ -63,3 +67,14 @@ const db = require('./db');
         });
   }
 
+   router.route('/')
+   .get(studentList)
+   .put(newStudent)
+
+
+   router.route('/:id')
+    .get(studentDetail)
+    .put(studentUpdate)
+    .delete(studentDelete)
+
+module.exports = router;

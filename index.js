@@ -1,27 +1,16 @@
-  const { json } = require('express');
   const express = require('express');
-  const router = require('./router/studentRouter');
+  const studentRouter = require('./routers/studentRouter');
   const app = express();
+
   app.use(express.json());
 
-
+  app.use('/api/student', studentRouter);
 
 
 
   app.get('/', (request, respond) => {
     respond.send("Hello Express js.....")
   });
-
-
-   app.route('/api/students')
-   .get(studentList)
-   .put(newStudent)
-
-
-   app.route('/api/students/:id')
-    .get(studentDetail)
-    .put(studentUpdate)
-    .delete(studentDelete)
 
 
 
