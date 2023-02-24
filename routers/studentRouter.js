@@ -2,8 +2,6 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db');
 
-const fs = require('fs');
-
 
   const studentList = (req, res) => {
      db.getDbStudent()

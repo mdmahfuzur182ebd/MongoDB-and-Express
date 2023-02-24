@@ -4,7 +4,7 @@
 
   app.use(express.json());
 
-  app.use('/api/student', studentRouter);
+  app.use('/api/students', studentRouter);
 
 
 
