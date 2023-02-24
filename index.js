@@ -1,7 +1,7 @@
   const { json } = require('express');
   const express = require('express');
+  const db = require('./db');
   const app = express();
-  const fs = require('fs');
   app.use(express.json());
 
 
@@ -10,25 +10,23 @@
   });
 
   app.get('/api/students', (req, res) => {
-    fs.readFile('./db.json', 'utf-8', (err, data) => {
-        // console.log(data);
-         const students = JSON.parse(data).students;
-         //console.log(student);
-         res.send(students);
-      })
+     db.getDbStudent()
+     .then(students => {
+       res.send(students);
+     })
   });
 
   app.post('/api/students', (req, res) => {
-     const student = req.body;
-     fs.readFile('./db.json', 'utf-8', (err, data) => {
-       const students = JSON.parse(data);
-       console.log(students);
-       students.students.push(student);
-       console.log(students);
-       fs.writeFile('./db.json', JSON.stringify(students), (err) =>{
-          res.send(student);
-       });
-     });
+      const student = req.body;
+        db.getDbStudent()
+        .then(students => {
+            students.push(student);
+            console.log(students);
+            db.insertDbStudent(students)
+            .then(data =>{
+               res.send(student);
+            })
+        });
   })
 
 
