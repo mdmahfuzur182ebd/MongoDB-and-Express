@@ -56,8 +56,20 @@
       });
   });
 
-  app.delete()
-
+  app.delete('/api/students/:id', (req, res) => {
+        const id = parseInt(req.params.id);
+        db.getDbStudent()
+        .then(students => {
+            const student = students.find(s => s.id === id);
+            if(!student) res.status(404).send("No student found with this id");
+            else {
+              const updatedStudent = students.filter( s => s.id !== id);
+              //console.log(updatedStudent);
+              db.insertDbStudent(updatedStudent)
+               .then(msg => res.send(student));
+            }
+        });
+  });
 
 
 
