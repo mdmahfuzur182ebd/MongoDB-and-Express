@@ -25,16 +25,6 @@
 
 
 
-  // app.get('/api/students', studentList);
-  // app.post('/api/students', newStudent);
-
-
-  // app.get('/api/students/:id',studentDetail );
-  // app.put('/api/students/:id', studentUpdate);
-  // app.delete('/api/students/:id', studentDelete);
-
-
-
 const port = 3000;
 
 app.listen(port, () => {
