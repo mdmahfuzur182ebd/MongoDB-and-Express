@@ -27,6 +27,20 @@
                res.send(student);
             })
         });
+  });
+
+  //route parameter..
+  app.get('/api/students/:id', (req,res)=> {
+     const id = parseInt(req.params.id);
+     //console.log(id);
+     db.getDbStudent()
+     .then(students => {
+        const student = students.find(s => s.id === id);
+        //console.log(student);
+        if(!student) res.status(404).send("No student found with this id");
+        else res.send(student);
+     })
+
   })
 
 
