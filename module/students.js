@@ -1,6 +1,7 @@
-const {Schema} = require('mongoose');
+const {Schema, model} = require('mongoose');
 
-// const  studentsSchema = Schema({
+// const mongoose = require('mongoose');
+// const studentsSchema = new mongoose.Schema({
 //     name: {type: String, require: true},
 //     age:{type: Number, min: 0},
 //     hobbies: {
@@ -13,7 +14,10 @@ const {Schema} = require('mongoose');
 //     }
 // });
 
- const Student = module('Student', Schema({
+// model.exports = mongoose.module('students', studentsSchema);
+
+
+ const Student = model('Student', Schema({
     name: {type: String, require: true},
     age:{type: Number, min: 0},
     hobbies: {

@@ -1,5 +1,5 @@
 const express = require('express');
-const { Student} = require('../models/students');
+const { Student} = require('../module/students');
 const router = express.Router();
 
 
@@ -8,8 +8,19 @@ const router = express.Router();
  
   }
 
-  const newStudent =  (req, res) => {
-      const student = req.body;
+  const newStudent = async (req, res) => {
+     // const student = req.body;
+      const student = new Student(req.body)
+      try {
+         const result = await student.save();
+         res.send(result);
+      } catch (err) {
+         const errMegs = [];
+         for(field in err.errors){
+            errMegs.push(err.errors[field].message);
+         }
+         return res.status(400).send(errMegs);
+      }
         
   }
 
@@ -32,7 +43,7 @@ const router = express.Router();
 
    router.route('/')
    .get(studentList)
-   .put(newStudent)
+   .post(newStudent)
 
 
    router.route('/:id')
