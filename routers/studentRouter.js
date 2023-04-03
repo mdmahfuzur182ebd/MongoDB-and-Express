@@ -4,12 +4,18 @@ const router = express.Router();
 
 
 
-  const studentList = (req, res) => {
- 
+  const studentList = async (req, res) => {
+     try {
+      const student = await Student.find()
+     .sort({name:1});
+      res.send(student);
+     } catch (error) {
+      return res.status(404).send("not find")
+     }
   }
 
   const newStudent = async (req, res) => {
-     // const student = req.body;
+
       const student = new Student(req.body)
       try {
          const result = await student.save();
@@ -24,21 +30,34 @@ const router = express.Router();
         
   }
 
-  const studentDetail = (req,res)=> {
-     const id = parseInt(req.params.id);
- 
+  const studentDetail = async (req,res)=> {
+     const id = req.params.id;
+     try{
+       const student = await Student.findById(id);
+       if(!student) return res.status(404).send("Id Not Found");
+       res.send(student);
+     }catch(err){
+       return res.status(404).send("Id Not Found")
+     }
   }
 
 
-  const studentUpdate = (req, res) => {
-     const id = parseInt(req.params.id);
+  const studentUpdate = async (req, res) => {
+     const id = req.params.id;
      const updatedData = req.body;
+     const student = await Student.findByIdAndUpdate(id, updatedData);
       
   }
 
-  const studentDelete = (req, res) => {
-        const id = parseInt(req.params.id);
-    
+  const studentDelete = async (req, res) => {
+        const id = req.params.id;
+        try {
+            const student = await Student.findByIdAndDelete(id);
+            if(!student) return res.status(404).send("Id Not Found");
+            res.send(student);
+         }catch(err){
+            return res.status(404).send("Id Not Found")
+       }
   }
 
    router.route('/')
