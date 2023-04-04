@@ -26,3 +26,9 @@ app.listen(port, () => {
 // Mongoose --> Model ->Collection
 // import Model;
 // Connect Database
+
+
+//Authentication -> Login
+//User --> table/collection -> email, password
+
+//Authorization--> Access to content/data
