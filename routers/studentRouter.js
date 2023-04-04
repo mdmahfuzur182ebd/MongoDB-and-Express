@@ -45,7 +45,14 @@ const router = express.Router();
   const studentUpdate = async (req, res) => {
      const id = req.params.id;
      const updatedData = req.body;
-     const student = await Student.findByIdAndUpdate(id, updatedData);
+     try {
+        const student = await Student.findByIdAndUpdate(id, updatedData ,{new : true});
+        
+        if(!student) return res.status(404).send("Id Not Found");
+       res.send(student);
+     }catch(err){
+       return res.status(404).send("Id Not Found")
+     }
       
   }
 
