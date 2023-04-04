@@ -1,5 +1,6 @@
   const express = require('express');
   const studentRouter = require('./routers/studentRouter');
+  const userRouter = require('./routers/userRouter');
   const app = express();
   const mongoose = require('mongoose');
 
@@ -7,8 +8,11 @@
    .then(()=> console.log("Connected to Mongodb!"))
    .catch(err => console.error(err._message));
 
+
   app.use(express.json());
+
   app.use('/api/students', studentRouter);
+  app.use('/api/user', userRouter)
 
 
   app.get('/', (request, respond) => {
